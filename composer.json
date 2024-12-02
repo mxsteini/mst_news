@@ -1,0 +1,28 @@
+{
+  "name": "mst/mst-news",
+  "type": "typo3-cms-extension",
+  "description": "News extension",
+  "authors": [
+    {
+      "name": "Michael Stein",
+      "email": "info@michaelstein-itb.de",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "typo3/cms-core": "^11.5 || ^12.4 || ^13.4",
+    "mst/mst-yaml2tca": ""
+  },
+  "license": "proprietary",
+  "autoload": {
+    "psr-4": {
+			"MST\\MstNews\\": "Classes/"
+		}
+	},
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "mst_news"
+		}
+	}
+}
+  

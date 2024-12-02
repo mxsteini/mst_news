@@ -1,0 +1,15 @@
+plugin.tx_mstnews {
+  view {
+    templateRootPath = EXT:mst_news/Resources/Private/Templates/
+    partialRootPaths = EXT:mst_news/Resources/Private/Partials/
+    layoutRootPath = EXT:mst_news/Resources/Private/Layouts/
+  }
+  settings {
+    # PID of the categories page    
+    categoriesPid = 
+    # PID of the list page
+    listPid = 
+    # Limit of the list
+    listLimit = 10
+  }
+}

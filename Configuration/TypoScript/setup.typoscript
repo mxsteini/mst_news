@@ -1,0 +1,22 @@
+plugin.tx_mstnews {
+  view {
+    templateRootPaths {
+        0 = EXT:mst_news/Resources/Private/Templates/
+        1 = {$plugin.tx_mstnews.view.templateRootPath}
+    }
+    partialRootPaths {
+        0 = EXT:mst_news/Resources/Private/Partials/
+        1 = {$plugin.tx_mstnews.view.partialRootPath}
+    }
+    layoutRootPaths {
+        0 = EXT:mst_news/Resources/Private/Layouts/
+        1 = {$plugin.tx_mstnews.view.layoutRootPath}
+    }
+  }
+  settings {
+    categoriesPid = {$plugin.tx_mstnews.settings.categoriesPid}
+    listPid = {$plugin.tx_mstnews.settings.listPid}
+    listLimit = {$plugin.tx_mstnews.settings.listLimit}
+    
+  }
+}
