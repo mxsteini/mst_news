@@ -3,32 +3,24 @@
 
 contentElements:
   # group id
-  new_mst_site_basic_elements:
+  mst_news:
     # group title
-    title: "New Basic elements yaml"
+    title: "Elements for news"
     # list of elements
     elements:
       # element id
-      new_mst_site_text:
-        title: "new Text"
+      mst_news_list:
+        title: "List"
         description: "please use LLL:EXT… notation"
         icon: "content-text"
         config:
-          columnsOverrides:
-            bodytext:
-              config:
-                type: text
-                enableRichtext: true
           # use array to create tabs
           showitem:
             -
               title: "LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general"
               fields:
                 - "--palette--;;general"
-                - "--palette--;;small_header"
-                - "subheader"
-                - "bodytext"
-                - "color"
+                - "--palette--;;headers"
             -
               title: "LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance"
               fields:
@@ -38,21 +30,3 @@ contentElements:
               fields:
                 - "--palette--;;hidden"
                 - "--palette--;;access"
-
-container:
-  # element id
-  col3:
-    label: '3 Cols'
-    description: '3 Cols'
-    iconIdentifier: content-container-columns-3
-    config:
-      -
-        -
-          name: "left"
-          colPos: 1000
-        -
-          name: "main"
-          colPos: 1001
-        -
-          name: "margin"
-          colPos: 1002

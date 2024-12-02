@@ -11,7 +11,7 @@
   ],
   "require": {
     "typo3/cms-core": "^11.5 || ^12.4 || ^13.4",
-    "mst/mst-yaml2tca": ""
+    "mst/mst-yaml2tca": "^1.0 || @dev"
   },
   "license": "proprietary",
   "autoload": {
