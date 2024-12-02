@@ -26,30 +26,6 @@ tt_content.mst_news_list {
         
     }
 
-    no_dataProcessing {
-        10 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
-        10 {
-            table = tx_mstnews_domain_model_category
-            pidInList.field = categoriesPid
-            orderBy = sorting
-            as = categories
-        }
-
-        # get used categories
-
-
-        20 = TYPO3\CMS\Frontend\DataProcessing\DatabaseQueryProcessor
-        20 {
-            table = pages
-            pidInList = {$plugin.tx_mstnews.settings.listPid}
-            orderBy = starttime DESC || crdate DESC
-            as = pages
-        }   
-
-
-
-    }
-
     variables {
         register = LOAD_REGISTER
         register {
