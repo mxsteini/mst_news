@@ -1,7 +1,3 @@
-plugin.tx_mstnews {
-}
-
-
 
 tt_content.mst_news_list = < lib.contentElement
 tt_content.mst_news_list {
@@ -27,83 +23,6 @@ tt_content.mst_news_list {
     }
 
     variables {
-        register = LOAD_REGISTER
-        register {
-            pageList.cObject = COA
-            pageList.cObject {
-                10 = CONTENT
-                10 {
-                    if.isFalse.data = GP:tx_mstnews_categories
-                    table = pages
-                    select {
-                        pidInList = {$plugin.tx_mstnews.settings.listPid}
-                        orderBy = starttime DESC, crdate DESC
-                        where = categories > 0
-
-                    }   
-                    renderObj = TEXT
-                    renderObj.field = uid
-                    renderObj.wrap = |###SPLIT_TOKEN###
-                    stdWrap.split {
-                        token = ###SPLIT_TOKEN###
-                        wrap = | |*| ,| |*| |
-
-                    }
-                }
-                20 < .10
-                20 {
-                    if.negate = 1
-                    select {
-                        join = sys_category_record_mm ON sys_category_record_mm.uid_foreign = pages.uid
-                        where.data = GP:tx_mstnews_categories
-                        where.intval = 1
-                        where.dataWrap = sys_category_record_mm.uid_local = |
-                    }
-                }
-            }
-            categoriesUsed.cObject = COA
-            categoriesUsed.cObject {
-                10 = CONTENT
-                10 {
-                    if.equals.data = siteLanguage:languageId
-                    if.value = 0
-
-                    table = sys_category
-                    select {
-                        pidInList = {$plugin.tx_mstnews.settings.categoriesPid}
-                        join = sys_category_record_mm ON sys_category_record_mm.uid_local = sys_category.uid JOIN pages ON sys_category_record_mm.uid_foreign = pages.uid
-                        where = pages.pid = {$plugin.tx_mstnews.settings.listPid}
-                        where.insertData = 1
-                        groupBy = sys_category.uid
-                    }
-                    renderObj = TEXT
-                    renderObj.field = uid_local
-                    renderObj.wrap = |###SPLIT_TOKEN###
-                    stdWrap.split {
-                        token = ###SPLIT_TOKEN###
-                        wrap = | |*| ,| |*| |
-
-                    }
-                }
-                20 < .10
-                20 {
-                    if.negate = 1
-                    select {
-                        where = pages.pid = {$plugin.tx_mstnews.settings.listPid}
-                    }
-                }
-            }
-        }
-
-        pageList = TEXT
-        pageList.data = register:pageList
-
-        categoriesRaw = TEXT
-        categoriesRaw.data = register:categoriesUsed
-
-        language = TEXT
-        language.data = siteLanguage:languageId
-
 
         categoriesSelector = FLUIDTEMPLATE
         categoriesSelector {
@@ -117,15 +36,15 @@ tt_content.mst_news_list {
                 10 = database-query
                 10 {
                     table = sys_category
+                    selectFields = sys_category.uid, sys_category.title
                     pidInList = {$plugin.tx_mstnews.settings.categoriesPid}
-                    uidInList.data = register:categoriesUsed
+                    join = sys_category_record_mm ON sys_category_record_mm.uid_local = sys_category.uid JOIN pages ON sys_category_record_mm.uid_foreign = pages.uid
+                    where = pages.pid = {$plugin.tx_mstnews.settings.listPid}
+                    where.insertData = 1
+                    groupBy = sys_category.uid
                     as = categories
                 }
 
-            }
-            variables {
-                categoriesUsed = TEXT
-                categoriesUsed.data = register:categoriesUsed
             }
         }
 
@@ -139,14 +58,23 @@ tt_content.mst_news_list {
             dataProcessing {
                 10 = database-query
                 10 {
-                    table = pages
+                    if.isFalse.data = GP:tx_mstnews_categories
                     selectFields =  *,( case when starttime>1 then starttime else crdate end ) as 'publishTime'
-                    uidInList.data = register:pageList
+                    table = pages
                     pidInList = {$plugin.tx_mstnews.settings.listPid}
                     orderBy = publishTime DESC
+                    where = categories > 0
                     as = pages
                 }
 
+                20 < .10
+                20 {
+                    if.negate = 1
+                    join = sys_category_record_mm ON sys_category_record_mm.uid_foreign = pages.uid
+                    where.data = GP:tx_mstnews_categories
+                    where.intval = 1
+                    where.dataWrap = sys_category_record_mm.uid_local = |
+                }
             }
         }
 
